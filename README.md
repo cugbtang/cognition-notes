@@ -21,7 +21,9 @@
 
 - `notes/` — 所有笔记，**扁平存放**，文件名 `YYYY-MM-DD-主题简称.md`（日期取原内容发布日期）
 - `assets/` — 图片、图表
+- `PREDICTIONS.md` — 跨笔记的预测追踪表，带判定标准与复核记录
 - `TEMPLATE.md` — 新笔记模板，复制后填写即可
+- `tools/` — 维护脚本
 - 分类靠 frontmatter 的 `tags`，不靠目录层级 —— 避免归类纠结与反复搬文件
 
 ## 索引
@@ -29,6 +31,12 @@
 | 日期 | 标题 | 类型 | 标签 | 一句话结论 |
 | --- | --- | --- | --- | --- |
 | 2026-09-03 | [和曾鸣聊产业史观：残酷的真相、会消亡的公司](notes/2026-09-03-zengming-industrial-history.md) | 播客 / 访谈 | `ai-industry` `agent` `org-strategy` `infra` | 2026 约等于「1992 年建站运动、浏览器还没诞生」，模型公司只是刚完成基础设施化，机会在尚未出现的 Agent 入口 |
+
+## 预测追踪
+
+所有**可证伪**的判断统一登记在 [PREDICTIONS.md](PREDICTIONS.md)：每条带判定成立 / 证伪的条件、验证方式、验证窗口与状态。笔记里的「存疑 / 待验证」节只放 ID 和链接，状态只在这张表里维护，避免两处不同步。
+
+目前登记 8 条，最早一条在 2026-12 到期（「3T 淘汰赛」）。复核结论写进「复核记录」，不改写原判断。
 
 ## 标签体系
 
@@ -47,15 +55,33 @@
 ## 快速开始
 
 ```bash
-cp TEMPLATE.md notes/2026-11-09-some-topic.md
+cp TEMPLATE.md notes/YYYY-MM-DD-some-topic.md
 ```
 
 frontmatter 必填字段：`title` / `source_type` / `source_url` / `author` / `published` / `captured` / `tags`。
-写完记得回 README 的索引表补一行。
+
+写完四件事：
+
+1. 回 README 的索引表补一行。
+2. 把可证伪判断登记到 `PREDICTIONS.md`，领 ID 后回填到笔记的「存疑 / 待验证」节。
+3. 更新 `PREDICTIONS.md` 的状态统计。
+4. 提交（见下）。
+
+## 同步到 GitHub
+
+常规环境直接 `git add -A && git commit && git push`。
+
+本机网络代理只放行 `api.github.com`，`github.com` 的 git 端点会返回 `CONNECT tunnel failed, 502`，push / fetch 都不可用。这时用 REST API 通道：
+
+```bash
+GH_TOKEN=$(gh auth token) python tools/sync_via_api.py "add: some new note"
+```
+
+脚本会把工作区改动写成一个提交推到远程 `main`，并把本地 `main` 与 `origin/main` 对齐到同一个 commit，工作区保持干净。前提：已安装并登录 `gh`。
 
 ## 两条维护原则
 
-- **预测要留痕**：每篇末尾的「存疑 / 待验证」不是免责声明，是复盘点。观点被证伪时**不删**，标注结论并写清原因 —— 判断记录的价值恰恰在于能被事后打脸。
+- **预测要留痕**：判断记录的价值在于能被事后打脸。观点被证伪时**不删**，在 `PREDICTIONS.md` 改状态、写结论、贴证据，保留原文。
 - **区分事实与判断**：引用原话加引号并标时间点；自己的推论单独成节，不要混进对原作者观点的转述里。
 
 ## 引用与版权
