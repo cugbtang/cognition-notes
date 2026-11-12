@@ -31,6 +31,7 @@
 | 日期 | 标题 | 类型 | 标签 | 一句话结论 |
 | --- | --- | --- | --- | --- |
 | 2026-09-03 | [和曾鸣聊产业史观：残酷的真相、会消亡的公司](notes/2026-09-03-zengming-industrial-history.md) | 播客 / 访谈 | `ai-industry` `agent` `org-strategy` `infra` | 2026 约等于「1992 年建站运动、浏览器还没诞生」，模型公司只是刚完成基础设施化，机会在尚未出现的 Agent 入口 |
+| 2026-11-12 | [曾鸣〈AI 发展第三阶段〉与开源 AI OS 生态对照](notes/2026-11-12-aios-open-source-landscape.md) | 文章 + 生态调研 | `ai-industry` `agent` `infra` `method` | 文章要的「任务操作系统」尚不存在，但拆出的每层能力都有成熟开源件，缺口在跨系统调度层 |
 
 ## 预测追踪
 
